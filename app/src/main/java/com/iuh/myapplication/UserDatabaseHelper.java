@@ -28,7 +28,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 "NAME TEXT);");
     }
 
-    private void insertUser(SQLiteDatabase db, String name) {
+    public void insertUser(SQLiteDatabase db, String name) {
         ContentValues userValues = new ContentValues();
         userValues.put("NAME", name);
         db.insert("USER", null, userValues);
