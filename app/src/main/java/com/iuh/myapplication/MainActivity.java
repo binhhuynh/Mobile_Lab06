@@ -9,11 +9,12 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity<itemClickListener> extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
 
@@ -45,8 +46,38 @@ public class MainActivity extends AppCompatActivity {
         UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
         EditText name = (EditText) findViewById(R.id.etName);
         db = userDatabaseHelper.getWritableDatabase();
-        userDatabaseHelper.insertUser(db, String.valueOf(name.getText()));
-        getDBConnection();
+        long result = userDatabaseHelper.insertUser(db, String.valueOf(name.getText()));
+        if (result != -1) {
+            Toast toast = Toast.makeText(this, "Inserted", Toast.LENGTH_SHORT);
+            toast.show();
+            getDBConnection();
+            name.getText().clear();
+        } else {
+            Toast toast = Toast.makeText(this, "Not inserted", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public void deleteUser(View view) {
+        UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
+        EditText name = (EditText) findViewById(R.id.etName);
+        db = userDatabaseHelper.getWritableDatabase();
+        long result = userDatabaseHelper.deleteUser(db, String.valueOf(name.getText()));
+        if (result != 0) {
+            Toast toast = Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT);
+            toast.show();
+            getDBConnection();
+            name.getText().clear();
+        } else {
+            Toast toast = Toast.makeText(this, "Not deleted", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public void cancelUser(View view) {
+        UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
+        EditText name = (EditText) findViewById(R.id.etName);
+        name.getText().clear();
     }
 
     @Override

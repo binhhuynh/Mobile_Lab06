@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class UserDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "user";
@@ -28,9 +29,17 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 "NAME TEXT);");
     }
 
-    public void insertUser(SQLiteDatabase db, String name) {
+    public long insertUser(SQLiteDatabase db, String name) {
         ContentValues userValues = new ContentValues();
         userValues.put("NAME", name);
-        db.insert("USER", null, userValues);
+        long rowID = db.insert("USER", null, userValues);
+        return rowID;
+    }
+
+    public long deleteUser(SQLiteDatabase db, String name) {
+        ContentValues userValues = new ContentValues();
+        userValues.put("NAME", name);
+        long rowID = db.delete("USER", "NAME = ?", new String[] {name});
+        return rowID;
     }
 }

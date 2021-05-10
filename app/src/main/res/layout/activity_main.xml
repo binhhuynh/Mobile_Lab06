@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:onClick="deleteUser"
             android:text="Remove"/>
 
         <Button
@@ -41,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:onClick="cancelUser"
             android:text="Cancel"/>
     </RelativeLayout>
 
